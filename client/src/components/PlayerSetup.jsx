@@ -52,7 +52,7 @@ export default function PlayerSetup({ onPlayerSet }) {
     } finally {
       setLoading(false);
     }
-  };
+    };
 
   return (
     <div className="player-setup">
