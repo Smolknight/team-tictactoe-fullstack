@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import Board from "./Board";
 import GameStatus from "./GameStatus";
-import PlayerSetup from "../PlayerSetup"; // ✅ NEW IMPORT
+import PlayerSetup from "../PlayerSetup";
 import {
   checkForWin,
   isValidMove,
@@ -13,8 +13,8 @@ import {
 
 export default function Game() {
   const [gameState, setGameState] = useState(createInitialGameState());
-  const [player, setPlayer] = useState(null); // ✅ NEW STATE
-  const hasUpdatedStatsRef = useRef(false); // ✅ Prevents infinite loop
+  const [player, setPlayer] = useState(null);
+  const hasUpdatedStatsRef = useRef(false);
 
   const { board, currentPlayer, gameOver, winner, winningCombo } = gameState;
 
@@ -43,18 +43,16 @@ export default function Game() {
 
   const handleReset = () => {
     setGameState(createInitialGameState());
-    hasUpdatedStatsRef.current = false; // ✅ Reset ref
+    hasUpdatedStatsRef.current = false;
   };
 
-  // ✅ NEW: Update player stats when game ends
   useEffect(() => {
-    // Early return if conditions not met
     if (!gameOver || !player || hasUpdatedStatsRef.current) {
       return;
     }
 
     const updateStats = async () => {
-      hasUpdatedStatsRef.current = true; // ✅ Mark as updated immediately
+      hasUpdatedStatsRef.current = true;
 
       try {
         let result;
@@ -82,25 +80,25 @@ export default function Game() {
         }
       } catch (error) {
         console.error("Failed to update stats:", error);
-        hasUpdatedStatsRef.current = false; // ✅ Allow retry on error
+        hasUpdatedStatsRef.current = false;
       }
     };
 
     updateStats();
   }, [gameOver, winner, player]);
 
-  // ✅ NEW: Show PlayerSetup if no player
+
   if (!player) {
     return <PlayerSetup onPlayerSet={setPlayer} />;
   }
 
-  // ✅ UPDATED: Show player info with stats
+
   return (
     <>
       <div className="game-container">
         <h1>Tic-Tac-Toe</h1>
         <div className="player-info">
-          <p>Welcome, {player.name}!</p>
+          <p>Welcome, {player.name}.</p>
           <p className="stats">
             Wins: {player.wins} | Losses: {player.losses} | Ties: {player.ties}
           </p>

@@ -87,8 +87,8 @@ export default function PlayerSetup({ onPlayerSet }) {
         </form>
 
         <div className="help-text">
-          <p>🎮 Play against yourself or a friend!</p>
-          <p>📊 Your wins and losses will be tracked</p>
+          <p> Play against yourself or a friend!</p>
+          <p>wins and losses will be tracked</p>
         </div>
       </div>
     </div>
