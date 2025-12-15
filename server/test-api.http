@@ -1,0 +1,22 @@
+# test-api.http
+
+### Variables
+@playerId = dog
+
+### Get Route Test
+GET http://localhost:3000/
+
+### Create Player
+Post http://localhost:3000/api/players
+Content-Type: application/json
+
+{
+    "name": "r",
+    "age": 18
+}
+
+### GET ALL PLAYERS
+GET http://localhost:3000/api/players
+
+### GET PLAYER from Id
+GET http://localhost:3000/api/players/{{playerId}}
