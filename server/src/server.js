@@ -1,5 +1,6 @@
 // src/server.js
 import express from "express";
+import cors from "cors";
 import "dotenv/config";
 import {
   createPlayer,
@@ -9,11 +10,25 @@ import {
   updatePlayerStats,
   getLeaderboard,
 } from "./services/playerService.js";
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV || "development";
+
+// middleware
+app.use(express.json());
+app.use(
+  cors({
+    origin:
+      NODE_ENV === "production"
+        ? process.env.CLIENT_URL
+        : "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(express.json());
 
+// GET ROUTES
 app.get("/", (req, res) => {
   res.status(200).send("Welcome Home!");
 });
@@ -122,8 +137,8 @@ app.post("/api/players/:id/stats", (req, res) => {
     res.status(200).json({
       success: true,
       player,
-      message: `Player stats updated: ${result}`
-    })
+      message: `Player stats updated: ${result}`,
+    });
   } catch (err) {
     res.status(500).json({
       success: false,
@@ -133,7 +148,10 @@ app.post("/api/players/:id/stats", (req, res) => {
 });
 
 app.use((req, res) => {
-  res.status(404).send("The page you're looking for does not exist");
+  res.status(404).json({
+    success: false,
+    error: "Page not found",
+  });
 });
 
 app.use((err, req, res, next) => {
@@ -141,7 +159,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({
     success: false,
     error: "Internal Server Error! ERror!",
-    msg: err.message,
+    msg: NODE_ENV === "development" ? err.message : undefined,
   });
 });
 

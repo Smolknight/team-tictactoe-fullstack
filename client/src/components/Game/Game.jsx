@@ -58,10 +58,13 @@ export default function Game() {
         let result;
         if (winner === "DRAW") {
           result = "tie";
+          player.ties++
         } else if (winner === "X") {
           result = "win";
+          player.wins++
         } else {
           result = "loss";
+          player.losses++
         }
 
         const response = await fetch(
