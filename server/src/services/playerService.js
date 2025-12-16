@@ -1,6 +1,7 @@
 // server/src/services/playerService.js
 import { v4 as uuidv4 } from "uuid";
 import db from "../config/database.js";
+
 // add wins, losses, ties, total games
 export function createPlayer(name) {
   const playerId = uuidv4();
@@ -91,4 +92,39 @@ export function getLeaderboard(limit = 10) {
     win_rate:
       p.total_games > 0 ? ((p.wins / p.total_games) * 100).toFixed(1) : "0.0",
   }));
+}
+
+/**
+ * @param {string} playerId
+ * @param {string} result - 'win', 'loss', or 'tie'
+ */
+export function updatePlayerStats(playerId, result) { 
+  try {
+    if (!['win', 'loss', 'tie'].includes(result)) { 
+      return {
+        error: 'Invalid result. Must be win, loss, or tie', 
+        status: 400
+      }
+    }
+
+    let updateColumn;
+    if (result === 'win') {
+      updateColumn = 'wins';
+    } else if (result === 'loss') {
+      updateColumn = 'losses';
+    } else { 
+      updateColumn = 'ties';
+    }
+
+    db.prepare(`
+      UPDATE players
+      SET ${updateColumn} = ${updateColumn} + 1,
+        total_games = total_games + 1
+      WHERE id = ?
+      `).run(playerId)
+
+    return getPlayer(playerId);
+  } catch (err) { 
+    throw err;
+  }
 }

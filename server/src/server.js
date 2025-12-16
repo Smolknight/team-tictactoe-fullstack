@@ -6,6 +6,8 @@ import {
   getAllPlayers,
   getPlayer,
   getPlayerByName,
+  updatePlayerStats,
+  getLeaderboard,
 } from "./services/playerService.js";
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,6 +16,23 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
   res.status(200).send("Welcome Home!");
+});
+
+app.get("/api/leaderboard", (req, res) => {
+  try {
+    const limit = parseInt(req.query.limit) || 10;
+    const leaderboard = getLeaderboard(limit);
+    res.json({
+      success: true,
+      leaderboard,
+      count: leaderboard.length,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: "Failed to get leaderboard",
+    });
+  }
 });
 
 app.get("/api/players", (req, res) => {
@@ -77,6 +96,38 @@ app.post("/api/players", (req, res) => {
   } catch (err) {
     res.status(500).json({
       error: err.message,
+    });
+  }
+});
+
+app.post("/api/players/:id/stats", (req, res) => {
+  try {
+    const { result } = req.body;
+    if (!result || !["win", "loss", "tie"].includes(result)) {
+      return res.status(400).json({
+        success: false,
+        error: "Result must be 'win', 'loss', or 'tie ",
+      });
+    }
+
+    const player = updatePlayerStats(req.params.id, result);
+
+    if (player.error) {
+      return res.status(player.status).json({
+        success: false,
+        error: player.error,
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      player,
+      message: `Player stats updated: ${result}`
+    })
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: "Failed to update player stats",
     });
   }
 });

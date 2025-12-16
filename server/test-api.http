@@ -1,18 +1,26 @@
 # test-api.http
 
 ### Variables
-@playerId = dog
+@playerId = 07337e4a-cf0b-4dba-b3ec-f9f9b2aa9b27
+@playerName = test4
 
 ### Get Route Test
 GET http://localhost:3000/
 
 ### Create Player
-Post http://localhost:3000/api/players
+POST http://localhost:3000/api/players
 Content-Type: application/json
 
 {
-    "name": "r",
-    "age": 18
+    "name": "test4"
+}
+
+### Update stats
+POST http://localhost:3000/api/players/{{playerId}}/stats
+Content-Type: application/json
+
+{
+    "result": "win"
 }
 
 ### GET ALL PLAYERS
@@ -20,3 +28,6 @@ GET http://localhost:3000/api/players
 
 ### GET PLAYER from Id
 GET http://localhost:3000/api/players/{{playerId}}
+
+### GET PLAYER from NAME
+GET http://localhost:3000/api/players/name/{{playerName}}
