@@ -1,5 +1,6 @@
 // src/server.js
 import express from "express";
+import cors from "cors";
 import "dotenv/config";
 import {
   createPlayer,
@@ -10,7 +11,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV || "development";
 app.use(express.json());
-
+app.use(cors())
 app.get("/", (req, res) => {
   res.status(200).send("Welcome Home!");
 });
