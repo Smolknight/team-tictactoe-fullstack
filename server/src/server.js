@@ -6,6 +6,7 @@ import {
   createPlayer,
   getAllPlayers,
   getPlayer,
+  getPlayerByName,
 } from "./services/playerService.js";
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -20,7 +21,7 @@ app.get("/api/players", (req, res) => {
   const players = getAllPlayers();
   res.status(200).json({
     success: true,
-    players
+    players,
   });
 });
 
@@ -31,7 +32,18 @@ app.get("/api/players/:id", (req, res) => {
   }
   res.status(200).json({
     success: true,
-    player
+    player,
+  });
+});
+
+app.get("/api/players/name/:name", (req, res) => {
+  const player = getPlayerByName(req.params.name);
+  if (player.error) {
+    return res.status(player.status).json({ error: player.error });
+  }
+  res.status(200).json({
+    success: true,
+    player,
   });
 });
 
