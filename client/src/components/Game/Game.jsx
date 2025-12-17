@@ -10,7 +10,7 @@ import {
   switchPlayer,
   createInitialGameState,
 } from "../../utils/gameLogic";
-
+import Leaderboard from "./Leaderboard";
 export default function Game() {
   const [gameState, setGameState] = useState(createInitialGameState());
   const [player, setPlayer] = useState(null);
@@ -116,6 +116,7 @@ export default function Game() {
           onCellClick={handleCellClick}
           winningCombo={winningCombo}
         />
+        <Leaderboard></Leaderboard>
         <button className="reset-button" onClick={handleReset}>
           New Game
         </button>
