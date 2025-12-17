@@ -31,22 +31,24 @@ const Leaderboard = () => {
       <table>
         <thead>
           <tr>
-            <th>Name |</th>
-            <th>Wins |</th>
-            <th>Loses |</th>
-            <th>Win rate |</th>
+            <th>Name </th>
+            <th>Wins </th>
+            <th>Loses </th>
+            <th>Win rate </th>
 
           </tr>
         </thead>
-        <tbody>
+        <tbody id="players">
           {data &&
             data.map((player) => (
-              <tr key={player.id}>
+              
+              <tr key={player.id} className="player-row">
                 <td>{player.name}</td>
                 <td>{player.wins}</td>
                 <td>{player.losses}</td>
                 <td>{player.win_rate}%</td>
               </tr>
+              
             ))}
         </tbody>
       </table>

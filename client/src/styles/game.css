@@ -1,0 +1,85 @@
+.game-container{
+    background-color: #0f0f0f;
+    height: 100vh;
+    color: white;
+} 
+.board{
+grid-column: 2;
+}
+
+#main-content{
+    display: grid;
+   grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+.cell{
+    font-size: large;
+    border: 1px solid black;
+    margin: 1px;
+    border-radius: 10px;
+}
+.cell:hover{
+    cursor: pointer;
+    background-color: #c9c9c9;
+    padding: 90px;
+    transition: all 0.5s;
+}
+.X{
+    color: white;
+    background-color: #002fff;
+    transition: all 0.3s ease;
+}
+.O{
+    color: black;
+    background-color: #ffffff;
+     transition: all 0.3s ease;
+}
+.winning{
+    color: black;
+    background-color:  #008000 !important;
+}
+.false{
+    color: black;
+    background-color: rgb(255, 0, 0) !important;
+}
+.leaderboard-container{
+    align-items: center;
+    margin-left:auto;
+    margin-right:auto;
+    grid-column: 3;
+}
+h2{
+    text-align: center;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  background: #111;
+  color: #aaa;
+}
+
+.player-row {
+  background: black;            /* ✅ black background */
+  color: white;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.player-row td {
+  padding: 0.75rem 1rem;
+}
+
+/* Hover effect */
+.player-row:hover {
+  transform: scale(1.03);       /* ✅ grow on hover */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+  position: relative;           /* prevents clipping */
+  z-index: 1;
+}
+#current{
+  
+}

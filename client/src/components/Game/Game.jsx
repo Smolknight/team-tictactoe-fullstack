@@ -106,6 +106,7 @@ export default function Game() {
             Wins: {player.wins} | Losses: {player.losses} | Ties: {player.ties}
           </p>
         </div>
+        <div id="main-content">
         <GameStatus
           currentPlayer={currentPlayer}
           winner={winner}
@@ -117,6 +118,8 @@ export default function Game() {
           winningCombo={winningCombo}
         />
         <Leaderboard></Leaderboard>
+      
+        </div>
         <button className="reset-button" onClick={handleReset}>
           New Game
         </button>
